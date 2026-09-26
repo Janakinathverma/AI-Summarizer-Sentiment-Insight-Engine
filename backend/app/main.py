@@ -1,5 +1,5 @@
 import os
-from fastapi import FastAPI
+from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import FileResponse
@@ -29,10 +29,10 @@ app.add_middleware(
 app.add_exception_handler(HuggingFaceAPIException, huggingface_exception_handler)
 app.add_exception_handler(Exception, generic_http_exception_handler)
 
-# Router Chaining
+# API Router Chaining
 app.include_router(api_router, prefix=settings.API_V1_STR)
 
-# Static Files & React App Integration
+# Static Files & React SPA Integration
 static_dir = os.path.join(os.path.dirname(__file__), "static")
 
 if os.path.exists(static_dir):
@@ -41,17 +41,19 @@ if os.path.exists(static_dir):
     if os.path.exists(assets_dir):
         app.mount("/assets", StaticFiles(directory=assets_dir), name="assets")
 
-    # Catch-all Route: Serves index.html for UI, lets API requests pass through
+    # Catch-all Route for Single Page Application (SPA)
     @app.get("/{full_path:path}")
     async def serve_react_app(full_path: str):
-        if full_path.startswith("api") or full_path.startswith("docs") or full_path.startswith("openapi.json"):
-            return None
+        # Exclude API, docs, and openapi routes so FastAPI router handles them
+        if full_path.startswith("api") or full_path.startswith("docs") or full_path == "openapi.json":
+            raise HTTPException(status_code=404, detail="API route not found")
+
         index_file = os.path.join(static_dir, "index.html")
         if os.path.exists(index_file):
             return FileResponse(index_file)
+
         return {"error": "React index.html file not found in static folder"}
 else:
-    # Fallback Root Endpoint if static folder doesn't exist yet
     @app.get("/")
     async def root():
         return {"message": "Welcome to AI Summarizer & Sentiment Insight Engine API"}

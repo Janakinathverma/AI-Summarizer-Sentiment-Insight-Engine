@@ -2,6 +2,7 @@ import time
 from fastapi import APIRouter, HTTPException
 from app.schemas.summarize import SummarizeRequest, SummarizeResponse
 from app.services.huggingface import hf_service
+from app.core.exceptions import HuggingFaceAPIException
 
 router = APIRouter()
 
@@ -16,5 +17,7 @@ async def summarize(payload: SummarizeRequest):
         )
         elapsed_ms = (time.time() - start_time) * 1000
         return SummarizeResponse(summary_text=summary, processing_time_ms=round(elapsed_ms, 2))
+    except HuggingFaceAPIException as e:
+        raise e
     except Exception as e:
-        raise HTTPException(status_code=500, detail=str(e))
+        raise HTTPException(status_code=500, detail=f"Unexpected Error: {str(e)}")
