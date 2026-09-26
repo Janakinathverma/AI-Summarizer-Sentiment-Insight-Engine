@@ -1,0 +1,32 @@
+/* Component-level tweaks that are easier to express as plain CSS
+   than as Tailwind utility strings. Tailwind's own reset/utilities
+   are pulled in globally via index.css. */
+
+#root {
+  width: 100%;
+}
+
+/* Custom track/thumb styling for the length-threshold sliders */
+input[type='range'] {
+  height: 4px;
+  border-radius: 9999px;
+}
+
+input[type='range']::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  border-radius: 9999px;
+  background: currentColor;
+  cursor: pointer;
+}
+
+input[type='range']::-moz-range-thumb {
+  width: 16px;
+  height: 16px;
+  border: none;
+  border-radius: 9999px;
+  background: currentColor;
+  cursor: pointer;
+}

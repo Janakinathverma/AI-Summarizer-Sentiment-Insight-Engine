@@ -1,0 +1,20 @@
+<!--
+  Shared icon sprite for the Insight Engine UI.
+  Reference a symbol with: <svg><use href="/icons.svg#icon-name" /></svg>
+  Most in-app icons come from lucide-react (see src/App.jsx); this sprite
+  holds the handful of custom marks that aren't part of that set.
+-->
+<svg xmlns="http://www.w3.org/2000/svg" style="display:none">
+  <symbol id="icon-neural-node" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <circle cx="12" cy="12" r="3"/>
+    <circle cx="4" cy="6" r="2"/>
+    <circle cx="20" cy="6" r="2"/>
+    <circle cx="4" cy="18" r="2"/>
+    <circle cx="20" cy="18" r="2"/>
+    <path d="M9.5 10.5 5.7 7.2M14.5 10.5l3.8-3.3M9.5 13.5l-3.8 3.3M14.5 13.5l3.8 3.3"/>
+  </symbol>
+
+  <symbol id="icon-wave-pulse" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M2 12h4l2-8 4 16 3-11 2 3h5"/>
+  </symbol>
+</svg>
