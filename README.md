@@ -24,9 +24,32 @@ An end-to-end, asynchronous full-stack AI web application designed to process un
 - **Pre-Trained AI Integration** — Integrates Hugging Face transformer models: `facebook/bart-large-cnn` for multi-sentence summarization and `distilbert-base-uncased-finetuned-sst-2-english` for sentiment classification.
 - **Futuristic UI & Theme Switcher** — Responsive glassmorphism interface with Orbitron & Rajdhani fonts, featuring dynamic Light/Dark mode toggling.
 - **Robust Payload Validation** — Enforces strict request/response data schemas using Pydantic models to guarantee API reliability and clean error handling.
-- **Production Containerization** — Complete setup packaged into a unified portable Docker image and managed via Docker Compose for single-port deployment.
+- **Production Containerization** — Complete setup packaged into a unified portable Docker image and published on Docker Hub (`jnv007/ai-insight-engine`).
 
 ## 4. Quick Start & Deployment
+
+### Run Directly from Docker Hub (Recommended)
+
+No need to clone or build source code! Run the pre-built container directly from Docker Hub:
+
+```bash
+docker run -d -p 8000:8000 --name ai_app jnv007/ai-insight-engine:v1.0
+```
+
+### Docker Compose Deployment
+
+Clone the repository and spin up using Docker Compose:
+
+```bash
+# Build and start container in detached mode
+docker compose up -d --build
+
+# View application logs
+docker compose logs -f
+
+# Stop container
+docker compose down
+```
 
 ### Local Development Setup
 
@@ -46,21 +69,6 @@ An end-to-end, asynchronous full-stack AI web application designed to process un
    pip install -r requirements.txt
    uvicorn app.main:app --reload --port 8000
    ```
-
-### Docker Compose Deployment
-
-Root directory par Docker Compose run karke full-stack application spin-up karein:
-
-```bash
-# Build and start container in detached mode
-docker compose up -d --build
-
-# View application logs
-docker compose logs -f
-
-# Stop container
-docker compose down
-```
 
 Access the application in browser:
 
@@ -109,10 +117,3 @@ Analyzes emotional tone and confidence score of submitted text.
 
 ### `GET /health`
 Health check endpoint monitoring upstream AI API availability.
-
-## 6. CV / Resume Impact Summary
-
-- Engineered a full-stack AI analytics platform integrating React (Vite) with a high-throughput FastAPI asynchronous backend.
-- Integrated Hugging Face Inference APIs (BART, DistilBERT) for real-time document summarization and sentiment classification with zero local GPU overhead.
-- Implemented Pydantic schema validation, CORS middleware, and custom HTTP exception handling to ensure production-grade REST API security and stability.
-- Containerized frontend and backend services using Docker & Docker Compose for reproducible, environment-agnostic deployment.
